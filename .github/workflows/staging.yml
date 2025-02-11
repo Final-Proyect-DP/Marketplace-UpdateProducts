@@ -89,7 +89,7 @@ jobs:
           timeout: "120s"
           script: |
             set -e
-            echo "Deploying image: fernando785/marketplace-update-products:staging
+            echo "Deploying image: fernando785/marketplace-update-products:staging"
             sudo docker stop update-product || true
             sudo docker rm update-product || true
             sudo docker pull fernando785/marketplace-update-products:staging
@@ -98,4 +98,4 @@ jobs:
               -p 5000:5000 \
               --restart unless-stopped \
               fernando785/marketplace-update-products:staging
-            sudo docker system prune -af --volumes || true 
+            sudo docker system prune -af --volumes || true
