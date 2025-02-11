@@ -2,7 +2,7 @@ name: Deploy on staging environment
 
 on:
   push:
-    branches: [Staging]
+    branches: [staging]
 
 jobs:
   build_docker_image:
