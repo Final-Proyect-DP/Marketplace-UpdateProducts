@@ -4,46 +4,45 @@ info:
   title: "Create Service API"
   description: "API documentation for the Create Service"
 paths:
-  /items:
-    post:
-      description: "Create a new product"
+  /items/{item_id}:
+    put:
+      description: "Update an existing product"
       consumes:
-        - multipart/form-data
+        - application/json
       parameters:
-        - name: "name"
-          in: "formData"
-          type: "string"
-          required: true
-          description: "Name of the product"
-        - name: "description"
-          in: "formData"
-          type: "string"
-          required: true
-          description: "Description of the product"
-        - name: "price"
-          in: "formData"
-          type: "number"
-          format: "float"
-          required: true
-          description: "Price of the product"
-        - name: "userId"
-          in: "formData"
-          type: "string"
-          required: false
-          description: "ID of the user creating the product"
-        - name: "image"
-          in: "formData"
-          type: "file"
-          required: false
-          description: "Image file of the product (JPEG/PNG format)"
-        - name: "category_id"
-          in: "formData"
+        - name: "item_id"
+          in: "path"
           type: "integer"
-          required: false
-          description: "ID of the category for the product"
+          required: true
+          description: "ID of the product to update"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "Name of the product"
+              description:
+                type: "string"
+                description: "Description of the product"
+              price:
+                type: "number"
+                format: "float"
+                description: "Price of the product"
+              userId:
+                type: "string"
+                description: "ID of the user updating the product"
+              image_data:
+                type: "string"
+                description: "Base64 encoded image data"
+              category_id:
+                type: "integer"
+                description: "ID of the category for the product"
       responses:
-        201:
-          description: "Product created successfully"
+        200:
+          description: "Product updated successfully"
           schema:
             type: "object"
             properties:
@@ -81,50 +80,8 @@ paths:
             properties:
               message:
                 type: "string"
-        500:
-          description: "Internal server error"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-  /categories:
-    post:
-      description: "Create a new category"
-      consumes:
-        - application/json
-      parameters:
-        - name: "body"
-          in: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              name:
-                type: "string"
-                description: "Name of the category"
-              description:
-                type: "string"
-                description: "Description of the category"
-      responses:
-        201:
-          description: "Category created successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-              category:
-                type: "object"
-                properties:
-                  id:
-                    type: "integer"
-                  name:
-                    type: "string"
-                  description:
-                    type: "string"
-        400:
-          description: "Invalid input"
+        404:
+          description: "Product not found"
           schema:
             type: "object"
             properties:
